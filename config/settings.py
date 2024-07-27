@@ -146,6 +146,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+GOOGLE_OAUTH2_CALLBACK_URL = 'http://localhost:8000/api/oauth2callback'
+GOOGLE_CREDENTIALS_DIR = BASE_DIR / 'apiCalendar'
+GOOGLE_CREDENTIALS_FILE = GOOGLE_CREDENTIALS_DIR / 'client_secret.json'
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587

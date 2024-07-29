@@ -69,6 +69,16 @@ def view_certifications(request, user_id):
     serializer = CertificationSerializer(certifications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def delete_certification(request, id):
+    certification = get_object_or_404(Certifications, id=id)
+    certification.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 @api_view(['POST'])
 def login(request):
     user = get_object_or_404(User,email=request.data['email'])

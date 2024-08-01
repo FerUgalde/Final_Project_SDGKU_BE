@@ -280,6 +280,14 @@ def google_calendar_create_event(request):
 
         serializer = BookingSerializer(data=booking_data)
 
+        email_to = booking_data.get('attendees')
+
+        subject = 'Meeting Scheduled'
+        message = 'You have successfully scheduled a meeting.'
+        email_from = settings.EMAIL_HOST_USER
+        html = render_to_string('emails/event.html', {'event': booking_data})
+        send_mail(subject, message, email_from, email_to, html_message=html)
+
         if serializer.is_valid():
             serializer.save()
         else:

@@ -76,7 +76,14 @@ def view_certifications(request, user_id):
 @permission_classes([IsAuthenticated])
 def delete_certification(request, id):
     certification = get_object_or_404(Certifications, id=id)
+    
+    file_path = certification.route_file.path
+
     certification.delete()
+
+    if os.path.isfile(file_path):
+        os.remove(file_path)
+
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])

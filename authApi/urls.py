@@ -27,6 +27,7 @@ urlpatterns = [
     path('meetings/<int:id>', views.view_meetings),
     path('updatephoto',views.update_photo),
     path('deletephoto',views.delete_photo),
+    path('deletecert/<int:id>',views.delete_certification),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

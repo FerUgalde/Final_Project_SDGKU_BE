@@ -28,6 +28,7 @@ urlpatterns = [
     path('updatephoto',views.update_photo),
     path('deletephoto',views.delete_photo),
     path('deletecert/<int:id>',views.delete_certification),
+    path('usersbytutor/<int:tutor_id>',views.view_users_by_tutor),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

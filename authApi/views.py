@@ -69,8 +69,6 @@ def view_certifications(request, user_id):
     serializer = CertificationSerializer(certifications, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -327,3 +325,25 @@ def view_meetings(request, id):
         meetings = Booking.objects.filter(user_id=id)
     serializer = BookingSerializer(meetings, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+@api_view(['GET'])
+def view_users_by_tutor(request, tutor_id):
+    try:
+        user_ids = Booking.objects.filter(tutor_id=tutor_id).values_list('user_id', flat=True).distinct()
+
+        users = User.objects.filter(id__in=user_ids)
+
+        serializer = UserModelSerializer(users, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    except Booking.DoesNotExist:
+        return Response({"error": "Tutor not found or no bookings available"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return Response({"error": "Internal server error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
